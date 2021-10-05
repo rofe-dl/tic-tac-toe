@@ -5,62 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="ticstyle.css">
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 justify-content-center">
+            <div class="col-12 mx-auto">
                 <div id="game-canvas">
-                    <div id="r1_c1" onclick="mark(this)" class="block border-bottom border-right"></div>
-                    <div id="r1_c2" onclick="mark(this)" class="block border-bottom border-right border-left"></div>
-                    <div id="r1_c3" onclick="mark(this)" class="block border-bottom border-left"></div>
+                    <div id="r1_c1" class="block border-bottom border-right"></div>
+                    <div id="r1_c2" class="block border-bottom border-right border-left"></div>
+                    <div id="r1_c3" class="block border-bottom border-left"></div>
 
-                    <div id="r2_c1" onclick="mark(this)" class="block border-bottom border-top border-right"></div>
-                    <div id="r2_c2" onclick="mark(this)" class="block border-bottom border-top border-right border-left"></div>
-                    <div id="r2_c3" onclick="mark(this)" class="block border-bottom border-top border-left"></div>
+                    <div id="r2_c1" class="block border-bottom border-top border-right"></div>
+                    <div id="r2_c2" class="block border-bottom border-top border-right border-left"></div>
+                    <div id="r2_c3" class="block border-bottom border-top border-left"></div>
 
-                    <div id="r3_c1" onclick="mark(this)" class="block border-top border-right"></div>
-                    <div id="r3_c2" onclick="mark(this)" class="block border-top border-left border-right"></div>
-                    <div id="r3_c3" onclick="mark(this)" class="block border-top border-left"></div>
+                    <div id="r3_c1" class="block border-top border-right"></div>
+                    <div id="r3_c2" class="block border-top border-left border-right"></div>
+                    <div id="r3_c3" class="block border-top border-left"></div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-dark w-100" type="button" onclick="clearBoard()">Clear Board</button>
-            </div>
+            <div class="col-12 mt-5 mx-auto text-center">
+                <button id="btn-clear" class="btn btn-dark btn-sm w-50" type="button">Clear Board</button>
+            <div>
         </div>
+
     </div>
 
-    <script>
-        let current = 'x';
-        const blocks = {
-            r1_c1: document.getElementById('r1_c1'),
-            r1_c2: document.getElementById('r1_c2'),
-            r1_c3: document.getElementById('r1_c3'),
-            r2_c1: document.getElementById('r2_c1'),
-            r2_c2: document.getElementById('r2_c2'),
-            r2_c3: document.getElementById('r2_c3'),
-            r3_c1: document.getElementById('r3_c1'),
-            r3_c2: document.getElementById('r3_c2'),
-            r3_c3: document.getElementById('r3_c3'),
-        }
-
-        const mark = (element) => {
-            if (!element.classList.contains('marked')){
-                element.classList.add('marked');
-                element.classList.add(current);
-                current = current == 'x' ? 'o' : 'x';
-            }
-        }
-
-        const clearBoard = () => {
-            for (let b in blocks) {
-                blocks[b].classList.remove('marked');
-                blocks[b].classList.remove('x');
-                blocks[b].classList.remove('o');
-            }
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
