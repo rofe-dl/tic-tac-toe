@@ -16,7 +16,6 @@ body{
 }
 
 .block.marked.o{
-    /* background-color: white; */
     background-image: url("img/o.png");
     background-size: 100px;
     background-position: center;
@@ -24,7 +23,6 @@ body{
 }
 
 .block.marked.x{
-    /* background-color: #666; */
     background-image: url("img/x.png");
     background-size: 100px;
     background-position: center;
