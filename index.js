@@ -1,5 +1,7 @@
 let current = 'x';
+
 const winnerDiv = document.querySelector('.winner');
+const winnerText = document.createElement('h3');
 
 const blocks = {
     "0": document.getElementById('r1_c1'),
@@ -13,24 +15,6 @@ const blocks = {
     "8": document.getElementById('r3_c3'),
 }
 
-document.querySelectorAll('.block').forEach((element) => {
-    element.onclick = () => {
-        if (!element.classList.contains('marked')){
-            element.classList.add('marked');
-            element.classList.add(current);
-            current = current == 'x' ? 'o' : 'x';
-            
-            // checks if there's any winner after every move
-            const winner = checkWin();
-            if (checkWin()) {
-                const text = document.createElement('h3');
-                text.textContent = winner.toUpperCase() + " wins! Clear board to play again.";
-                winnerDiv.appendChild(text);
-            }
-        }
-    }
-})
-
 document.querySelector('#btn-clear').onclick = () => {
     winnerDiv.removeChild(winnerDiv.firstChild);
     for (let b in blocks) {
@@ -39,6 +23,19 @@ document.querySelector('#btn-clear').onclick = () => {
         blocks[b].classList.remove('o');
     }
 }
+
+document.querySelectorAll('.block').forEach((element) => {
+    element.onclick = () => {
+        if (!element.classList.contains('marked')){
+            element.classList.add('marked');
+            element.classList.add(current);
+            current = current == 'x' ? 'o' : 'x';
+            
+            // checks if there's any winner after every move
+            checkIfGameOver();
+        }
+    }
+})
 
 const isMarkedX = (index) => {
     const element = blocks[index.toString()];
@@ -50,7 +47,23 @@ const isMarkedO = (index) => {
     return element.classList.contains('o');
 }
 
-const checkWin = () => {
+const isMarked = (index) => {
+    const element = blocks[index.toString()];
+    return element.classList.contains('marked');
+}
+
+const checkIfGameOver = () => {
+    const winner = findWinner();
+    if (winner === 'tie'){
+        winnerText.textContent = "The game is tied. Clear board to play again.";
+        winnerDiv.appendChild(winnerText);
+    }else if (winner) {
+        winnerText.textContent = winner.toUpperCase() + " wins! Clear board to play again.";
+        winnerDiv.appendChild(winnerText);
+    }
+}
+
+const findWinner = () => {
     // horizontal
     for (let i = 0; i <= 6; i = i + 3){
         if (isMarkedX(i) && isMarkedX(i+1) && isMarkedX(i+2))
@@ -75,5 +88,15 @@ const checkWin = () => {
             return 'o';
     }
 
-    return false;
+    // if tied
+    let tie = true;
+    for (let i = 0; i < 9; i++){
+        if (!isMarked(i)){
+            tie = false;
+            break;
+        }
+    }
+
+    return tie ? 'tie' : false;
+
 }
