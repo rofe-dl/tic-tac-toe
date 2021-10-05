@@ -1,2 +1,3 @@
-const {checkWin, blocks} = require('./index');
-
+const makeAiMove = () => {
+    
+}
