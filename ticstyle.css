@@ -1,0 +1,25 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+#game-canvas {
+    margin: 5px;
+    width: 475px;
+    padding: 5px;
+}
+
+.block {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+}
+
+.block.marked.o{
+    background-color: white;
+}
+
+.block.marked.x{
+    background-color: #666;
+}
+
