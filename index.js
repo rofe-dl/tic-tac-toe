@@ -1,4 +1,5 @@
 let current = 'x';
+const winnerDiv = document.querySelector('.winner');
 
 const blocks = {
     "0": document.getElementById('r1_c1'),
@@ -12,26 +13,26 @@ const blocks = {
     "8": document.getElementById('r3_c3'),
 }
 
-const mark = (element) => {
-    if (!element.classList.contains('marked')){
-        element.classList.add('marked');
-        element.classList.add(current);
-        current = current == 'x' ? 'o' : 'x';
-
-        const winner = checkWin();
-        if (checkWin()) {
-            console.log(winner + " wins!!");
+document.querySelectorAll('.block').forEach((element) => {
+    element.onclick = () => {
+        if (!element.classList.contains('marked')){
+            element.classList.add('marked');
+            element.classList.add(current);
+            current = current == 'x' ? 'o' : 'x';
+            
+            // checks if there's any winner after every move
+            const winner = checkWin();
+            if (checkWin()) {
+                const text = document.createElement('h3');
+                text.textContent = winner.toUpperCase() + " wins! Clear board to play again.";
+                winnerDiv.appendChild(text);
+            }
         }
-    }
-}
-
-document.querySelectorAll('.block').forEach((div) => {
-    div.onclick = () => {
-        mark(div);
     }
 })
 
 document.querySelector('#btn-clear').onclick = () => {
+    winnerDiv.removeChild(winnerDiv.firstChild);
     for (let b in blocks) {
         blocks[b].classList.remove('marked');
         blocks[b].classList.remove('x');
