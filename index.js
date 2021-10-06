@@ -1,8 +1,7 @@
 let current = 'x';
 
-let statesTaken = [];
-let statesAvailable = [[0, 1, 2], [3, 4, 5], [6, 7, 8]
-                [0, 3, 6], [1, 4, 7], [2, 5, 8]
+let winStates = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
                 [0, 4, 8], [2, 4, 6]];
 
 const winnerDiv = document.querySelector('.winner');
@@ -20,13 +19,29 @@ const blocks = [
     document.getElementById('8'),
 ]
 
+const removeStates = (block) => {
+    let newWinStates = [];
+    for (let i = 0; i < winStates.length; i++){
+        if (! (winStates[i].includes(block)) ){
+            newWinStates.push(winStates[i]);
+        }
+    }
+
+    winStates = newWinStates;
+}
+
 document.querySelector('#btn-clear').onclick = () => {
-    winnerDiv.removeChild(winnerDiv.firstChild);
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].classList.remove('marked');
         blocks[i].classList.remove('x');
         blocks[i].classList.remove('o');
     }
+
+    current = 'x';
+    winStates = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]];
+    winnerDiv.removeChild(winnerDiv.firstChild);
 }
 
 document.querySelectorAll('.block').forEach((element) => {
@@ -35,74 +50,26 @@ document.querySelectorAll('.block').forEach((element) => {
             element.classList.add('marked');
             element.classList.add(current);
             
-
-            // statesTaken.push()
+            removeStates(parseInt(element.id));
             current = current == 'x' ? 'o' : 'x';
-            
-            makeAiMove();
-            // checks if there's any winner after every move
-            checkIfGameOver();
+            if (!checkIfGameOver()){
+                makeAiMove();
+                checkIfGameOver();
+            }
         }
     }
 })
 
 const checkIfGameOver = () => {
     const winner = findWinner();
-    if (winner === 'tie'){
+
+    if (winner === 'tie')
         winnerText.textContent = "The game is tied. Clear the board to play again.";
-        winnerDiv.appendChild(winnerText);
-    }else if (winner) {
+    else if (winner) 
         winnerText.textContent = winner.toUpperCase() + " wins! Clear board to play again.";
-        winnerDiv.appendChild(winnerText);
-    }
-}
+    else
+        return false;
 
-const isMarkedX = (index) => {
-    return blocks[index].classList.contains('x');
-}
-
-const isMarkedO = (index) => {
-    return blocks[index].classList.contains('o');
-}
-
-const isMarked = (index) => {
-    return blocks[index].classList.contains('marked');
-}
-
-const findWinner = () => {
-    // horizontal
-    for (let i = 0; i <= 6; i = i + 3){
-        if (isMarkedX(i) && isMarkedX(i+1) && isMarkedX(i+2))
-            return 'x';
-        else if (isMarkedO(i) && isMarkedO(i+1) && isMarkedO(i+2))
-            return 'o';
-    }
-
-    // vertical
-    for (let i = 0; i <= 2; i++){
-        if (isMarkedX(i) && isMarkedX(i+3) && isMarkedX(i+6))
-            return 'x';
-        else if (isMarkedO(i) && isMarkedO(i+3) && isMarkedO(i+6))
-            return 'o';
-    }
-
-    // diagonal
-    for (let i = 0, j = 8; i <= 2; i = i + 2, j = j - 2){
-        if (isMarkedX(i) && isMarkedX(4) && isMarkedX(j))
-            return 'x';
-        else if (isMarkedO(i) && isMarkedO(4) && isMarkedO(j))
-            return 'o';
-    }
-
-    // if tied
-    let tie = true;
-    for (let i = 0; i < 9; i++){
-        if (!isMarked(i)){
-            tie = false;
-            break;
-        }
-    }
-
-    return tie ? 'tie' : false;
-
+    winnerDiv.appendChild(winnerText);
+    return true;
 }
