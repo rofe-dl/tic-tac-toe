@@ -4,9 +4,9 @@ body{
 }
 
 #game-canvas {
-    /* margin: 5px; */
+    margin: 5px; 
     width: 475px;
-    /* padding: 5px; */
+    padding: 5px;
 }
 
 .block {
