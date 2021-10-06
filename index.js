@@ -19,6 +19,9 @@ const blocks = [
     document.getElementById('8'),
 ]
 
+/**
+ * Removes the possible win states the AI can obtain.
+ */
 const removeStates = (block) => {
     let newWinStates = [];
     for (let i = 0; i < winStates.length; i++){
@@ -30,6 +33,9 @@ const removeStates = (block) => {
     winStates = newWinStates;
 }
 
+/**
+ * CLears the board and resets variables.
+ */
 document.querySelector('#btn-clear').onclick = () => {
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].classList.remove('marked');
@@ -53,8 +59,7 @@ document.querySelectorAll('.block').forEach((element) => {
             removeStates(parseInt(element.id));
             current = current == 'x' ? 'o' : 'x';
             if (!checkIfGameOver()){
-                makeAiMove();
-                checkIfGameOver();
+                setTimeout(makeAiMove, 50);
             }
         }
     }

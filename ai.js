@@ -1,3 +1,6 @@
+/**
+ * Returns index of the max value in array.
+ */
 const findMaxIndex = (array) => {
     let max = 0, maxIndex = 0;
     for (let i = 0; i < array.length; i++){
@@ -10,6 +13,9 @@ const findMaxIndex = (array) => {
     return maxIndex;
 }
 
+/**
+ * Chooses the most common block among possible win states.
+ */
 const findBestMove = () => {
     let count = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     for(let i = 0; i < winStates.length; i++){
@@ -28,10 +34,12 @@ const findBestMove = () => {
 
 
 const makeAiMove = () => {
-    const index = findBestMove();
-    const element = document.getElementById(index.toString());
+    const block = findBestMove();
+    const element = document.getElementById(block.toString());
     
     element.classList.add('marked');
     element.classList.add(current);
     current = current == 'x' ? 'o' : 'x';
+
+    checkIfGameOver();
 }

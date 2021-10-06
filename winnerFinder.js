@@ -1,13 +1,13 @@
-const isMarkedX = (index) => {
-    return blocks[index].classList.contains('x');
+const isMarkedX = (block) => {
+    return blocks[block].classList.contains('x');
 }
 
-const isMarkedO = (index) => {
-    return blocks[index].classList.contains('o');
+const isMarkedO = (block) => {
+    return blocks[block].classList.contains('o');
 }
 
-const isMarked = (index) => {
-    return blocks[index].classList.contains('marked');
+const isMarked = (block) => {
+    return blocks[block].classList.contains('marked');
 }
 
 const findWinner = () => {
